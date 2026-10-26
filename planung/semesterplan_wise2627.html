@@ -1,0 +1,348 @@
+<title>Klausurplan WiSe 26/27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: eine Spalte, oben Kennzahlen, dann Zeitstrahl als Herzstück, darunter Tabellen und Themen-Checklisten */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --fg: #172033;
+  --muted: #5d6779;
+  --line: #dde1e8;
+  --accent: #1f4e8c;
+  --band: #e9edf3;
+  --warn: #9a5b00;
+  --warn-bg: #fdf3e2;
+  --m1: #1f6fb2; --m2: #c2571a; --m3: #2f8a5b; --m4: #8a4fb8; --m5: #b8364f; --m6: #5f6b7a;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151c; --surface: #181e28; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2a3242;
+    --accent: #7fb0ea; --band: #1d2431; --warn: #f0b45a; --warn-bg: #2b2214;
+    --m1: #5aa2e0; --m2: #e8854d; --m3: #5cc08b; --m4: #b78be0; --m5: #e86f86; --m6: #9aa6b5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151c; --surface: #181e28; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2a3242;
+  --accent: #7fb0ea; --band: #1d2431; --warn: #f0b45a; --warn-bg: #2b2214;
+  --m1: #5aa2e0; --m2: #e8854d; --m3: #5cc08b; --m4: #b78be0; --m5: #e86f86; --m6: #9aa6b5;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-block: 32px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 36px; }
+h1, h2 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 1.15rem; font-weight: 800; }
+.eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+.sub { color: var(--muted); margin: 6px 0 0; max-width: 65ch; }
+section { display: grid; gap: 12px; min-width: 0; }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* Kennzahlen */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.kpi { background: var(--surface); padding: 14px 16px; display: grid; gap: 2px; }
+.kpi b { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; }
+.kpi span { color: var(--muted); font-size: 0.85rem; }
+
+/* Klausurkette */
+.chain { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.exam { border-top: 4px solid var(--c); background: var(--surface); border-radius: 0 0 6px 6px; padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.exam .d { font-family: var(--font-mono); font-weight: 600; }
+.exam .n { font-size: 0.85rem; line-height: 1.3; }
+.exam .gap { font-size: 0.78rem; color: var(--muted); }
+.exam .left { font-size: 0.78rem; color: var(--c); font-weight: 600; }
+@media (max-width: 760px) { .chain { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Zeitstrahl */
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.gantt { min-width: 760px; padding: 12px 16px 16px; position: relative; }
+.grow { display: grid; grid-template-columns: 170px 1fr; align-items: center; min-height: 30px; }
+.grow .lab { font-size: 0.85rem; font-weight: 600; padding-right: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.track { position: relative; height: 30px; }
+.months .track { height: 22px; }
+.mtick { position: absolute; top: 0; font-size: 0.72rem; color: var(--muted); font-family: var(--font-mono); border-left: 1px solid var(--line); padding-left: 4px; height: 100%; }
+.bg { position: absolute; top: 0; bottom: 0; }
+.bg.ferien { background: var(--band); }
+.bg.kp { background: repeating-linear-gradient(135deg, transparent 0 6px, var(--band) 6px 8px); }
+.bgtrack { position: absolute; left: calc(16px + 170px); right: 16px; top: 34px; bottom: 16px; pointer-events: none; }
+.seg { position: absolute; top: 50%; transform: translateY(-50%); border-radius: 3px; background: var(--c); }
+.seg.thin { height: 4px; opacity: 0.35; }
+.seg.mid { height: 12px; opacity: 0.55; }
+.seg.full { height: 18px; }
+.mark { position: absolute; top: 50%; width: 12px; height: 12px; background: var(--fg); transform: translate(-50%, -50%) rotate(45deg); border: 2px solid var(--surface); }
+.today { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--accent); }
+.today::after { content: "heute"; position: absolute; top: -2px; left: 4px; font-size: 0.7rem; color: var(--accent); font-weight: 600; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.82rem; color: var(--muted); }
+.legend i { display: inline-block; vertical-align: middle; margin-right: 6px; border-radius: 2px; background: var(--muted); }
+
+/* Tabellen */
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; white-space: nowrap; }
+td.r, th.r { text-align: right; }
+tbody tr:last-child td { border-bottom: 0; }
+tfoot td { font-weight: 600; border-top: 2px solid var(--line); border-bottom: 0; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--c); margin-right: 8px; }
+.tag { display: inline-block; font-size: 0.75rem; padding: 1px 7px; border-radius: 99px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.unk { color: var(--warn); font-weight: 600; }
+
+/* Woche */
+.week { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.bar { display: flex; height: 12px; border-radius: 3px; overflow: hidden; }
+.bar span { display: block; height: 100%; }
+.card p { margin: 0; font-size: 0.9rem; }
+.card ul { margin: 0; padding-left: 18px; font-size: 0.9rem; display: grid; gap: 4px; }
+
+/* Themen */
+.topics { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+details.mod { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--c); border-radius: 6px; min-width: 0; }
+details.mod summary { cursor: pointer; padding: 12px 14px; display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: center; list-style: none; }
+details.mod summary::-webkit-details-marker { display: none; }
+details.mod summary:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mname { font-weight: 600; }
+.pct { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
+.prog { grid-column: 1 / -1; height: 4px; background: var(--band); border-radius: 2px; overflow: hidden; }
+.prog span { display: block; height: 100%; background: var(--c); width: 0; transition: width .2s; }
+.tlist { list-style: none; margin: 0; padding: 0 14px 12px; display: grid; gap: 2px; }
+.tlist label { display: grid; grid-template-columns: 18px 1fr; gap: 8px; font-size: 0.88rem; padding: 3px 0; cursor: pointer; }
+.tlist input { margin: 3px 0 0; accent-color: var(--c); }
+.tlist input:checked + span { color: var(--muted); text-decoration: line-through; }
+.strat { font-size: 0.85rem; color: var(--muted); padding: 0 14px 12px; margin: 0; }
+
+/* Hinweise */
+.notes { display: grid; gap: 8px; }
+.note { background: var(--warn-bg); border-radius: 6px; padding: 10px 14px; font-size: 0.9rem; }
+.note b { color: var(--warn); }
+footer { color: var(--muted); font-size: 0.8rem; }
+@media (prefers-reduced-motion: reduce) { .prog span { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">M.Sc. Allgemeiner Maschinenbau · RWTH Aachen · 1. Fachsemester</div>
+    <h1>Klausurplan WiSe 26/27</h1>
+    <p class="sub">6 Klausuren zwischen 9. Februar und 18. März, nebenbei 20 h/Woche Werkstudium bei Infineon. Workload und Inhalte stammen aus dem Modulhandbuch MSALLGMB (SPO 2011, Rev. 27.07.2026).</p>
+  </header>
+
+  <section aria-label="Kennzahlen">
+    <div class="kpis">
+      <div class="kpi"><b id="k-days">–</b><span>Tage bis zur 1. Klausur</span></div>
+      <div class="kpi"><b>28 <small style="font-size:.9rem">+ ?</small></b><span>ECTS (5 Module + Ind. Statistik)</span></div>
+      <div class="kpi"><b>840 h</b><span>Workload laut MHB, ohne Ind. Statistik</span></div>
+      <div class="kpi"><b>540 h</b><span>davon Selbststudium</span></div>
+      <div class="kpi"><b>37 Tage</b><span>von der ersten bis zur letzten Klausur</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Klausurkette</h2>
+    <div class="chain" id="chain"></div>
+  </section>
+
+  <section>
+    <h2>Zeitstrahl</h2>
+    <div class="scroll"><div class="gantt" id="gantt"></div></div>
+    <div class="legend">
+      <span><i style="width:22px;height:4px;opacity:.5"></i>Vorlesung + laufende Nachbereitung</span>
+      <span><i style="width:22px;height:10px;opacity:.6"></i>Vorbereitung nebenher</span>
+      <span><i style="width:22px;height:14px"></i>Lernblock (Hauptfokus)</span>
+      <span><i style="width:10px;height:10px;transform:rotate(45deg);background:var(--fg)"></i>Klausur</span>
+      <span><i style="width:22px;height:12px;background:var(--band)"></i>Weihnachtspause (ca.)</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Module laut Modulhandbuch</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Modul</th><th>Klausur</th><th class="r">ECTS</th><th class="r">SWS</th><th class="r">Präsenz</th><th class="r">Selbst&shy;studium</th><th class="r">Gesamt</th><th>Prüfung</th><th>Lerntyp</th></tr></thead>
+        <tbody id="mtable"></tbody>
+        <tfoot><tr><td>Summe (ohne Ind. Statistik)</td><td></td><td class="r num">28</td><td class="r num">20</td><td class="r num">300 h</td><td class="r num">540 h</td><td class="r num">840 h</td><td colspan="2"></td></tr></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Lernblöcke in der Klausurphase</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Zeitraum</th><th class="r">Tage</th><th>Fokus</th><th>nebenher</th></tr></thead>
+        <tbody id="btable"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Wochenrhythmus</h2>
+    <div class="week">
+      <div class="card">
+        <div class="eyebrow">Vorlesungszeit · bis ca. Ende Januar</div>
+        <div class="bar" aria-hidden="true"><span style="width:38%;background:var(--m6)"></span><span style="width:38%;background:var(--accent)"></span><span style="width:24%;background:var(--m3)"></span></div>
+        <ul>
+          <li><span class="num">20 h</span> Infineon</li>
+          <li><span class="num">20 h</span> Vorlesungen und Übungen (20 SWS, plus Ind. Statistik)</li>
+          <li><span class="num">~12 h</span> Nachbereitung, also ca. 2 h pro Modul</li>
+        </ul>
+        <p>Das ergibt etwa 52 h pro Woche. Halte für jedes Modul einen festen Nachbereitungsslot im Kalender fest.</p>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Weihnachtspause · ca. 21.12.–06.01.</div>
+        <p>Das ist das erste echte Lernfenster. Nutze es für die Grundlagen der beiden Februar-Rechenfächer und die Lernzettel für HeES.</p>
+        <ul>
+          <li><b>RCP:</b> Laplace, Frequenzgang, Regelkreis, PID</li>
+          <li><b>AuTE:</b> LP/MILP, Pinch-Methode</li>
+          <li><b>HeES:</b> Prozesskette als Lernzettel</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Klausurphase · KW 5–11</div>
+        <p>Allein zwischen dem 9. und 16.02. liegen drei Klausuren. In KW 5–7 und vor dem 11.03. lohnt es sich, bei Infineon Stunden zu reduzieren oder Urlaub zu nehmen. Kläre das früh ab.</p>
+        <ul>
+          <li>Lernblock-Tage mit ca. 6 h Lernzeit einplanen</li>
+          <li>Altklausuren immer unter Zeitdruck rechnen</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Themen-Checkliste</h2>
+    <p class="sub" style="margin:0">Die Themen stammen aus den Modulbeschreibungen. Abgehakte Punkte merkt sich nur dein Browser.</p>
+    <div class="topics" id="topics"></div>
+  </section>
+
+  <section>
+    <h2>Offene Punkte</h2>
+    <div class="notes">
+      <div class="note"><b>Industrielle Statistik</b> steht nicht im Modulhandbuch MSALLGMB. Es ist vermutlich ein Modul aus einem anderen Katalog. ECTS, SWS und Inhalte deshalb im Modulkatalog von RWTHonline nachsehen.</div>
+      <div class="note"><b>Modulname:</b> Im Handbuch heißt das Fach am 11.02. „Auslegung und Transformation von Energie<em>systemen</em>“ (4013389), nicht „…Energiespeicher“. Bitte prüfen, ob das dieselbe Prüfung ist.</div>
+      <div class="note"><b>Prüfungsform:</b> Bei AuTE gibt das Handbuch keine Prüfungsform an. Bei RCP gilt laut Handbuch Klausur (60 min) <em>oder</em> mündlich (15 min). Beides in RWTHonline bzw. im Moodle-Kurs prüfen.</div>
+      <div class="note"><b>Termine:</b> Prüfe das Ende der Vorlesungszeit und die Weihnachtspause im RWTH-Kalender. Die Fristen für die Prüfungsanmeldung in RWTHonline im Blick behalten.</div>
+    </div>
+  </section>
+
+  <footer>Quelle: Modulhandbuch_M_Sc_Allg_Maschbau.pdf im Repo. Stand 26.10.2026</footer>
+</div>
+
+<script>
+(function () {
+  const D = s => new Date(s + "T00:00:00");
+  const fmt = s => { const d = D(s); return d.toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" }); };
+  const days = (a, b) => Math.round((D(b) - D(a)) / 864e5);
+
+  const M = [
+    { id: "rcp", c: "--m1", short: "RCP", name: "Rapid Control Prototyping", exam: "2027-02-09", ects: 5, sws: 4, pr: 60, ss: 90, tot: 150,
+      form: "Klausur 60 min oder mündl. 15 min", typ: "Rechnen + Simulink",
+      segs: [["2026-10-26","2027-01-29","thin"],["2026-12-21","2027-01-06","mid"],["2027-01-18","2027-01-29","mid"],["2027-01-30","2027-02-08","full"]],
+      strat: "Rechenfach. Ab Januar Altklausuren und Übungsaufgaben rechnen, Matlab/Simulink selbst nachbauen.",
+      topics: ["Systembegriff, lineare Systeme, Zustandsraum","Laplace-Transformation, Frequenzgang, lineare Regelkreisglieder, Z-Transformation","Physikalische Modellbildung: DGL, Wirkungspläne","Matlab/Simulink-Grundlagen","Ereignisdiskrete Modelle: Graphen, Statecharts, Petri-Netze","Nichtparametrische Identifikation: Korrelation, FFT","Parametrische Identifikation: rekursive / nichtrekursive Schätzung","Gewichtsfolgenschätzung, nichtlineare Prozesse, Shannon-Theorem","Regelungsentwurf: P-, PD-, PID-Parameter","Steuerungsentwurf (diskrete Steuerungen)","Simulation: Euler, Heun, Runge-Kutta, Stateflow","Modelica/Dymola, objektorientierte Modellierung","RCP: SiL, HiL, Codegenerierung"] },
+    { id: "aute", c: "--m2", short: "AuTE", name: "Auslegung und Transformation von Energiesystemen", exam: "2027-02-11", ects: 5, sws: 3, pr: 45, ss: 105, tot: 150,
+      form: "im MHB nicht angegeben", typ: "Rechnen + Konzepte",
+      segs: [["2026-10-26","2027-01-29","thin"],["2026-12-21","2027-01-06","mid"],["2027-01-18","2027-02-08","mid"],["2027-02-10","2027-02-10","full"]],
+      strat: "Nur ein Tag Puffer nach RCP. AuTE muss deshalb schon im Januar parallel sitzen. Rechenschwerpunkte sind Optimierung, Pinch und Netzauslegung.",
+      topics: ["Skalen und Anforderungen an Energiesysteme, IST-SOLL-Analyse, Modellklassen","Optimierung: LP, MILP, NLP, MINLP, grafische Lösung, Branch & Bound, Lagrange","Life Cycle Assessment, absolute Nachhaltigkeit","Wärmeintegration: Pinch, Summenwärme, Wärmekaskade","Wärmeübertragernetzwerke auslegen","Optimierung von Wärmeübertragernetzwerken","Wärmenetze und -speicher, Abwärme, Wärmepumpen","Wärmeerzeugung (fossil, Wärmepumpen)","P2X & H2-Herstellung, Elektrolyse-Thermodynamik","H2-to-X / H2-from-X, Wasserstoffrouten","Gas- und Stromnetze, Gasleitungen und -speicher","Netzstabilität, Regelstrategien, elektrische Energiespeicher","Komponenten nachhaltiger Energiesysteme (Trends)"] },
+    { id: "hees", c: "--m3", short: "HeES", name: "Herstellung elektrischer Energiespeicher", exam: "2027-02-16", ects: 6, sws: 4, pr: 60, ss: 120, tot: 180,
+      form: "100 % Klausur", typ: "Wissen / Prozesskette",
+      segs: [["2026-10-26","2027-01-29","thin"],["2026-12-21","2027-01-06","mid"],["2027-02-12","2027-02-15","full"]],
+      strat: "Wissensfach mit nur 4 Lerntagen im Block. Deshalb ab sofort pro Vorlesung Karteikarten anlegen. Durch deinen Batteriehintergrund hast du einen Vorsprung.",
+      topics: ["Funktionsweise von Energiespeichern","Übersicht und Anwendung Energiespeicher","Elektrodenfertigung","Zellfertigung (Rund, Pouch, prismatisch)","Formation und Reifung","Qualitätssicherung","Modul- und Packfertigung","Sicherheitstests und Normen","Fabrikplanung","Wertschöpfungsstrukturen Europa","Recycling"] },
+    { id: "gpe", c: "--m4", short: "GPE", name: "Grundlagen der Produktentwicklung", exam: "2027-02-26", ects: 6, sws: 5, pr: 75, ss: 105, tot: 180,
+      form: "Klausur", typ: "Methoden anwenden",
+      segs: [["2026-10-26","2027-01-29","thin"],["2027-02-17","2027-02-25","full"]],
+      strat: "Methodenfach (Pahl/Beitz). Übungen mitmachen, Gestaltungsregeln mit Skizzen lernen und Morphologischen Kasten sowie Nutzwertanalyse an Altaufgaben üben.",
+      topics: ["Anforderungsermittlung und -priorisierung","Funktionsstruktur, Elementarfunktionen","Prinziplösungen, Koller-Katalog","Morphologischer Kasten, TRIZ","Gestaltungsgrundregeln: einfach, eindeutig, sicher","Gestaltungsprinzipien: Kraftleitung, Aufgabenteilung, Selbsthilfe, Stabilität","Gestaltungsrichtlinien Bauteil (Urformen, Umformen, Trennen)","Gestaltungsrichtlinien Baugruppe (Montage, Schweißen, Schrauben)","Produktbewertung, Nutzwertanalyse","Rationalisierung, Varianten- und Konfigurationsmanagement","Baureihen, Ähnlichkeitsgesetze","Baukästen"] },
+    { id: "dums", c: "--m5", short: "DUMS", name: "Dynamische Unternehmensmodellierung und -simulation", exam: "2027-03-11", ects: 6, sws: 4, pr: 60, ss: 120, tot: 180,
+      form: "Klausur", typ: "Modellieren",
+      segs: [["2026-10-26","2027-01-29","thin"],["2027-02-27","2027-03-10","full"]],
+      strat: "Längster Lernblock mit 12 Tagen. Die Modellierungssprachen (UML, Petri-Netze, DSM) an Beispielen zeichnen, nicht nur lesen.",
+      topics: ["Ursache-Wirkung und Rückkopplung in Geschäftssystemen","Simulationsstudie planen, Daten, Verifikation und Validierung","Prozessmodellierung mit UML und K3","Design Structure Matrix (statisch / dynamisch)","Simulation von Produktentwicklungsprojekten","Materialfluss und Logistik (Supply Chain, Ersatzteile)","Warteschlangensimulation","Petri-Netz-basierte Modellierung","Workflow-Simulation, Änderungsmanagement","Menschmodellierung (Arbeitsplatz, Erreichbarkeit)","Data Literacy im Unternehmen"] },
+    { id: "is", c: "--m6", short: "IS", name: "Industrielle Statistik", exam: "2027-03-18", ects: null, sws: null, pr: null, ss: null, tot: null,
+      form: "nicht im MHB", typ: "Rechnen (vermutlich)",
+      segs: [["2026-10-26","2027-01-29","thin"],["2027-02-27","2027-03-10","mid"],["2027-03-12","2027-03-17","full"]],
+      strat: "Statistik braucht Übung. Neben DUMS jeden Tag ca. 1 h rechnen, danach 6 Tage Endspurt.",
+      topics: [] }
+  ];
+
+  // Klausurkette
+  const today = new Date(); today.setHours(0,0,0,0);
+  const left = s => Math.round((D(s) - today) / 864e5);
+  document.getElementById("k-days").textContent = Math.max(0, left(M[0].exam));
+  document.getElementById("chain").innerHTML = M.map((m, i) => {
+    const g = i ? days(M[i-1].exam, m.exam) : null;
+    const l = left(m.exam);
+    return `<div class="exam" style="--c:var(${m.c})"><span class="d">${fmt(m.exam)}</span><span class="n">${m.name}</span>
+      <span class="gap">${g === null ? "Auftakt" : g + " Tage nach der vorherigen"}</span>
+      <span class="left">${l > 0 ? "noch " + l + " Tage" : l === 0 ? "heute" : "geschrieben"}</span></div>`;
+  }).join("");
+
+  // Zeitstrahl
+  const S = "2026-10-26", E = "2027-03-21", span = days(S, E);
+  const pos = s => (days(S, s) / span) * 100;
+  const wid = (a, b) => Math.max(((days(a, b) + 1) / span) * 100, 0.6);
+  const months = [["2026-11-01","Nov"],["2026-12-01","Dez"],["2027-01-01","Jan"],["2027-02-01","Feb"],["2027-03-01","Mär"]];
+  let g = `<div class="bgtrack"><div class="bg ferien" style="left:${pos("2026-12-21")}%;width:${wid("2026-12-21","2027-01-06")}%"></div>
+    <div class="bg kp" style="left:${pos("2027-01-30")}%;width:${wid("2027-01-30","2027-03-18")}%"></div>`;
+  const tPos = (today - D(S)) / 864e5 / span * 100;
+  if (tPos >= 0 && tPos <= 100) g += `<div class="today" style="left:${tPos}%"></div>`;
+  g += `</div><div class="grow months"><div class="lab"></div><div class="track">` +
+    months.map(([d, l]) => `<span class="mtick" style="left:${pos(d)}%">${l}</span>`).join("") + `</div></div>`;
+  M.forEach(m => {
+    g += `<div class="grow" style="--c:var(${m.c})"><div class="lab" title="${m.name}"><span class="dot"></span>${m.short}</div><div class="track">` +
+      m.segs.map(([a, b, t]) => `<span class="seg ${t}" style="left:${pos(a)}%;width:${wid(a, b)}%"></span>`).join("") +
+      `<span class="mark" style="left:${pos(m.exam) + 0.35}%" title="Klausur ${fmt(m.exam)}"></span></div></div>`;
+  });
+  document.getElementById("gantt").innerHTML = g;
+
+  // Modultabelle
+  const u = v => v == null ? `<span class="unk">?</span>` : v;
+  const h = v => v == null ? `<span class="unk">?</span>` : v + " h";
+  document.getElementById("mtable").innerHTML = M.map(m => `<tr style="--c:var(${m.c})">
+    <td><span class="dot"></span>${m.name}</td><td class="num" style="white-space:nowrap">${fmt(m.exam)}</td>
+    <td class="r num">${u(m.ects)}</td><td class="r num">${u(m.sws)}</td><td class="r num">${h(m.pr)}</td><td class="r num">${h(m.ss)}</td><td class="r num">${h(m.tot)}</td>
+    <td>${m.form}</td><td><span class="tag">${m.typ}</span></td></tr>`).join("");
+
+  // Lernblöcke
+  const B = [
+    ["2026-12-21","2027-01-06","Grundlagen RCP + AuTE, Lernzettel HeES","Weihnachtspause, Infineon nach Absprache"],
+    ["2027-01-18","2027-01-29","Altklausuren RCP + AuTE (abends / Wochenende)","letzte Vorlesungswochen"],
+    ["2027-01-30","2027-02-08","RCP (ca. 60 %)","AuTE (ca. 40 %)"],
+    ["2027-02-10","2027-02-10","AuTE Endspurt","–"],
+    ["2027-02-12","2027-02-15","HeES (Karteikarten wiederholen)","–"],
+    ["2027-02-17","2027-02-25","GPE","–"],
+    ["2027-02-27","2027-03-10","DUMS","Ind. Statistik ca. 1 h/Tag"],
+    ["2027-03-12","2027-03-17","Ind. Statistik Endspurt","–"]
+  ];
+  document.getElementById("btable").innerHTML = B.map(([a, b, f, n]) =>
+    `<tr><td class="num" style="white-space:nowrap">${a === b ? fmt(a) : fmt(a) + " – " + fmt(b)}</td><td class="r num">${days(a, b) + 1}</td><td>${f}</td><td>${n}</td></tr>`).join("");
+
+  // Themen-Checkliste
+  const KEY = "klausurplan-wise2627";
+  let st = {};
+  try { st = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { st = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
+  const box = document.getElementById("topics");
+  box.innerHTML = M.map(m => `<details class="mod" id="mod-${m.id}" style="--c:var(${m.c})" ${m.id === "rcp" ? "open" : ""}>
+    <summary><span class="mname">${m.name}</span><span class="pct" data-p="${m.id}"></span><span class="prog"><span data-b="${m.id}"></span></span></summary>
+    <p class="strat">${m.strat}</p>
+    ${m.topics.length ? `<ul class="tlist">${m.topics.map((t, i) => `<li><label><input type="checkbox" id="t-${m.id}-${i}" data-k="${m.id}-${i}" ${st[m.id + "-" + i] ? "checked" : ""}><span>${t}</span></label></li>`).join("")}</ul>`
+      : `<p class="strat"><span class="unk">Die Inhalte fehlen im Modulhandbuch.</span> Sie kommen hinzu, sobald das Material im Repo liegt.</p>`}
+  </details>`).join("");
+  const upd = () => M.forEach(m => {
+    const n = m.topics.length, k = m.topics.filter((_, i) => st[m.id + "-" + i]).length;
+    document.querySelector(`[data-p="${m.id}"]`).textContent = n ? `${k}/${n}` : "–";
+    document.querySelector(`[data-b="${m.id}"]`).style.width = n ? (k / n * 100) + "%" : "0";
+  });
+  box.addEventListener("change", e => { const k = e.target.dataset.k; if (!k) return; st[k] = e.target.checked; save(); upd(); });
+  upd();
+})();
+</script>
